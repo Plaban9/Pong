@@ -15,6 +15,7 @@ namespace Configuration.PlayerConfiguration
     public class BallAttributes
     {
         public Color ballColour = Color.green;
+        public Vector2 magnitude = new Vector2(10f, 2.5f);
         public Vector3 ballScale;
     }
 

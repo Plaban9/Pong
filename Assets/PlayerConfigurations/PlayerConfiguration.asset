@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ballAttributes:
     ballColour: {r: 1, g: 0.9490196, b: 0.019607844, a: 1}
-    magnitude: {x: 15, y: 3.75}
+    magnitude: {x: 12.5, y: 3}
     ballScale: {x: 0.4, y: 0.4, z: 1}
   playerAttributes:
   - playerName: Player_1
     playerColour: {r: 1, g: 0.06666667, b: 0.47058824, a: 1}
-    magnitude: 16.5
+    magnitude: 17.5
     paddlePositionType: 2
     playerInput:
       leftMovementKeyCode: 119
@@ -34,7 +34,7 @@ MonoBehaviour:
       upperBound: {x: 0, y: 3.1, z: 0}
   - playerName: Player_2
     playerColour: {r: 0.003921569, g: 1, b: 0.95686275, a: 1}
-    magnitude: 16.5
+    magnitude: 17.5
     paddlePositionType: 3
     playerInput:
       leftMovementKeyCode: 273

@@ -54,6 +54,8 @@ namespace Managers
             GameObject gameObject = Instantiate(_ballGameObject);
             gameObject.transform.parent = _interactablesParentObject.transform;
 
+            GameManager.Instance.BallGameobjectRefernce = gameObject;
+
             Ball ball = gameObject.GetComponent<Ball>();
             ball.paddle = _playerIndexToPlayerDKV[_playerTurnIndex].gameObject.GetComponent<Paddle>();
 
@@ -62,11 +64,14 @@ namespace Managers
 
         public void ResetGame(int playerIndex)
         {
-            GameObject gameObject = Instantiate(_paddleGameObject);
-            gameObject.transform.parent = _interactablesParentObject.transform;
-            gameObject.GetComponent<Player>().OnReset(playerIndex, _playerConfiguration.playerAttributes[playerIndex], playerIndex == _playerTurnIndex);
+            _playerIndexToPlayerDKV[playerIndex].OnReset(playerIndex, _playerConfiguration.playerAttributes[playerIndex], playerIndex == _playerTurnIndex);
+        }
 
-            InstantiateBall();
+        public void ResetBall()
+        {
+            Ball ball = GameManager.Instance.BallGameobjectRefernce.GetComponent<Ball>();
+            ball.paddle = _playerIndexToPlayerDKV[_playerTurnIndex].gameObject.GetComponent<Paddle>();
+            ball.OnReset();
         }
 
         private void AddToPlayerDKV(int playerIndex, Player player)
@@ -82,6 +87,11 @@ namespace Managers
         public void SetPlayerTurnIndex(int playerIndex)
         {
             _playerTurnIndex = playerIndex;
+        }
+
+        public void OnRallyStateChanged(int playerIndex)
+        {
+            _playerIndexToPlayerDKV[playerIndex].gameObject.GetComponent<Paddle>().OnRallyStateChanged();
         }
     }
 }

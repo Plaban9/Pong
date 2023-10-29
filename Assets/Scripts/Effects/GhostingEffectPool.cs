@@ -5,7 +5,7 @@ namespace Effects.Ghosting
     using System.Collections.Generic;
 
     using UnityEngine;
-
+    ///https://eightify.app/summary/game-development-and-design/creating-ghosting-effect-in-2d-platformer-game-unity-tutorial
     public class GhostingEffectPool : MonoBehaviour
     {
         [SerializeField]
@@ -47,7 +47,11 @@ namespace Effects.Ghosting
         {
             for (int i = 0; i < _maxPoolSize; i++)
             {
-                var _ = Instantiate(_ghostEffectPrefab, Vector3.positiveInfinity, Quaternion.identity, transform);
+                var instantiatedObject = Instantiate(_ghostEffectPrefab, transform);
+                instantiatedObject.transform.localPosition = new Vector3(50f, 50f, 50f);
+
+
+
             }
 
             _populatedOnce = true;

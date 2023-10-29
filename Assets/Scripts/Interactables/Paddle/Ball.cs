@@ -26,24 +26,25 @@ namespace Interactables.Ball
         private float _lastGhostEffect = -100f;
 
         public Paddle paddle { get; set; }
-        private bool _hasStarted = false;
+        [SerializeField]
+        private Vector2 magnitude = new Vector2(10f, 2.5f);
 
         // Update is called once per frame
         void Update()
         {
-            if (!_hasStarted)
+            if (!GameManager.Instance.IsInRally)
             {
                 MoveWithPaddle();
             }
 
             // Wait for a ball release
-            if (paddle != null && Input.GetKeyDown(paddle.GetBallReleaseKeyCode()) && !_hasStarted)
+            if (paddle != null && Input.GetKeyDown(paddle.GetBallReleaseKeyCode()) && !GameManager.Instance.IsInRally)
             {
                 ShootBall();
-                _hasStarted = true;
+                GameManager.Instance.IsInRally = true;
             }
 
-            if (_hasStarted && GameManager.Instance.ShowBallTrail)
+            if (GameManager.Instance.IsInRally && GameManager.Instance.ShowBallTrail)
             {
                 ShowGhostingEffect();
             }
@@ -52,14 +53,13 @@ namespace Interactables.Ball
         void ShootBall()
         {
             // Shoot the ball relative to screen width center w.r.t ball position
-            if (this.transform.position.y < Screen.height / 2f)
+            if (this.transform.position.y > 0)
             {
-                this.GetComponent<Rigidbody2D>().velocity = new Vector2(10f, -2.5f);
+                this.GetComponent<Rigidbody2D>().velocity = new Vector2(magnitude.x, -1 * magnitude.y);
             }
-
             else
             {
-                this.GetComponent<Rigidbody2D>().velocity = new Vector2(10f, 2.5f);
+                this.GetComponent<Rigidbody2D>().velocity = new Vector2(magnitude.x, magnitude.y);
             }
         }
 
@@ -71,6 +71,13 @@ namespace Interactables.Ball
         public void OnInstantiated(BallAttributes ballAttributes)
         {
             ApplyColour(ballAttributes.ballColour);
+            this.transform.localScale = ballAttributes.ballScale;
+            magnitude = ballAttributes.magnitude;
+        }
+
+        public void OnReset()
+        {
+
         }
 
         private void ApplyColour(Color colour)
@@ -85,7 +92,7 @@ namespace Interactables.Ball
         }
 
         private void ShowGhostingEffect()
-        {                      
+        {
             if (Mathf.Abs(Vector2.Distance(_lastGhostEffectFramePosition, transform.position)) > _distanceBetweenGhostFrames)
             {
                 GhostingEffectPool.Instance.ReclaimObjectFromPool();

@@ -42,6 +42,12 @@ namespace Interactables.Paddle
         [SerializeField]
         private GameObject _ballPlaceholder; // For Reset
 
+        [SerializeField]
+        private Animator _paddleAnimation;
+
+        [SerializeField]
+        private ParticleSystem _ballHitParticle;
+
         public void SetPaddleName(string name)
         {
             _paddleName = name;
@@ -59,6 +65,7 @@ namespace Interactables.Paddle
 
         private void Awake()
         {
+            _paddleAnimation = GetComponent<Animator>();
         }
 
         // Start is called before the first frame update
@@ -144,6 +151,16 @@ namespace Interactables.Paddle
             this._ballReleaseKeyCode = playerAttributes.playerInput.ballReleaseKeyCode;
 
             this._isStarterPaddle = isStarterPaddle;
+
+            var main = _ballHitParticle.main;
+            main.startColor = playerAttributes.playerColour;
+
+            if (playerAttributes.paddlePositionType == PaddlePositionType.UP || playerAttributes.paddlePositionType == PaddlePositionType.DOWN)
+            {
+                main.startRotation = 0;
+            }
+
+            OnRallyStateChanged();
         }
 
         public void OnReset(int playerIndex, bool isStarterPaddle)
@@ -157,6 +174,28 @@ namespace Interactables.Paddle
             this.transform.position = _initialPosition;
 
             this._isStarterPaddle = isStarterPaddle;
+
+            OnRallyStateChanged();
+        }
+
+        public void OnRallyStateChanged()
+        {
+            _paddleAnimation.SetBool(GameplayConstants.Paddle.IDLE_ANIMATION, !GameManager.Instance.IsInRally);
+
+            //if (GameManager.Instance.IsInRally)
+            //{
+            //    SpriteRenderer spriteRenderer = this.transform.GetComponent<SpriteRenderer>();
+
+            //    this.transform.GetComponent<SpriteRenderer>().color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, 1f);
+            //}
+        }
+
+        private void OnCollisionEnter2D(Collision2D collision)
+        {
+            if (GameManager.Instance.IsInRally && collision.gameObject.CompareTag(GameplayConstants.Ball.BALL_TAG))
+            {
+                _ballHitParticle.Play();
+            }
         }
     }
 }
