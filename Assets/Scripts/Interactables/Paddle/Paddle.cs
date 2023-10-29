@@ -1,7 +1,8 @@
 namespace Interactables.Paddle
 {
-    using System.Collections;
-    using System.Collections.Generic;
+    using Configuration.PlayerConfiguration;
+
+    using Managers;
 
     using UnityEngine;
 
@@ -15,7 +16,7 @@ namespace Interactables.Paddle
 
 
         [SerializeField]
-        private Vector3 _paddlePosition;
+        private Vector3 _initialPosition;
 
         [SerializeField]
         private float _magnitude;
@@ -26,6 +27,9 @@ namespace Interactables.Paddle
 
         [SerializeField]
         private KeyCode _rightMovementKeyCode;
+
+        [SerializeField]
+        private KeyCode _ballReleaseKeyCode;
 
 
         [SerializeField]
@@ -38,6 +42,10 @@ namespace Interactables.Paddle
         [SerializeField]
         private GameObject _ballPlaceholder; // For Reset
 
+        public void SetPaddleName(string name)
+        {
+            _paddleName = name;
+        }
 
         public string GetPaddleName()
         {
@@ -56,27 +64,19 @@ namespace Interactables.Paddle
         // Start is called before the first frame update
         void Start()
         {
-            _paddlePosition = this.transform.position;
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
+            _initialPosition = this.transform.position;
         }
 
         private void FixedUpdate()
         {
             if (Input.GetKey(_leftMovementKeyCode))
             {
-                _paddlePosition = GetNextPosition(this.transform.position, PaddleMovementType.LEFT);
+                this.transform.position = GetNextPosition(this.transform.position, PaddleMovementType.LEFT);
             }
             else if (Input.GetKey(_rightMovementKeyCode))
             {
-                _paddlePosition = GetNextPosition(this.transform.position, PaddleMovementType.RIGHT);
+                this.transform.position = GetNextPosition(this.transform.position, PaddleMovementType.RIGHT);
             }
-
-            this.transform.position = _paddlePosition;
         }
 
         private Vector3 GetNextPosition(Vector3 currentPosition, PaddleMovementType paddleMovementType)
@@ -94,7 +94,6 @@ namespace Interactables.Paddle
 
                 case PaddleMovementType.RIGHT:
                     return new Vector3(currentPosition.x, GetMovementWithBoundY(currentPosition.y - (_magnitude * Time.deltaTime / 2f)), currentPosition.z);
-
             }
 
             return currentPosition;
@@ -119,6 +118,45 @@ namespace Interactables.Paddle
             return _ballPlaceholder;
         }
 
+        public KeyCode GetBallReleaseKeyCode()
+        {
+            return _ballReleaseKeyCode;
+        }
         #endregion
+
+        public void OnInstantiated(int playerIndex, string name, bool isStarterPaddle, PlayerAttributes playerAttributes)
+        {
+            this.transform.localScale = playerAttributes.paddleTransform.playerScale;
+            this.transform.localRotation = Quaternion.Euler(playerAttributes.paddleTransform.playerRotation);
+
+            _initialPosition = playerAttributes.paddleTransform.playerPosition;
+            this.transform.position = _initialPosition;
+
+            this._magnitude = playerAttributes.magnitude;
+
+            _minimumBounds = playerAttributes.playSpaceBounds.lowerBound;
+            _maximumBounds = playerAttributes.playSpaceBounds.upperBound;
+
+            this.name = this._paddleName = name;
+
+            this._leftMovementKeyCode = playerAttributes.playerInput.leftMovementKeyCode;
+            this._rightMovementKeyCode = playerAttributes.playerInput.rightMovementKeyCode;
+            this._ballReleaseKeyCode = playerAttributes.playerInput.ballReleaseKeyCode;
+
+            this._isStarterPaddle = isStarterPaddle;
+        }
+
+        public void OnReset(int playerIndex, bool isStarterPaddle)
+        {
+            PaddleTransforms paddleTransforms = GameManager.Instance.PlayerManager.GetPlayerConfiguration().playerAttributes[playerIndex].paddleTransform;
+
+            this.transform.localScale = paddleTransforms.playerScale;
+            this.transform.localRotation = Quaternion.Euler(paddleTransforms.playerRotation);
+
+            _initialPosition = paddleTransforms.playerPosition;
+            this.transform.position = _initialPosition;
+
+            this._isStarterPaddle = isStarterPaddle;
+        }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace Interactables.Paddle
 {
-    enum PaddleMovementType
+    public enum PaddleMovementType
     {
         UP,
         DOWN,
