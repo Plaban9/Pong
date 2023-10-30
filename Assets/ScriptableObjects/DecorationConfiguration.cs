@@ -8,6 +8,7 @@ namespace Configuration.DecorationConfiguration
     public class DecorationConfiguration : ScriptableObject
     {
         public BoundsAttributes boundsAttributes;
+        public MidAreaAttributes midAreaAttributes;
     }
 
     [System.Serializable]
@@ -23,5 +24,11 @@ namespace Configuration.DecorationConfiguration
         {
             return _randomColorGradient.Evaluate(Random.Range(0f, 1f));
         }
+    }
+
+    [System.Serializable]
+    public class MidAreaAttributes
+    {
+        public Color midAreaColor = Color.white;
     }
 }

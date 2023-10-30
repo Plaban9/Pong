@@ -66,5 +66,28 @@ namespace Managers
                 GameManager.Instance.PlayerWonNotification(playerWonIndex);
             }
         }
+
+        public int GetLeadingPlayerIndex()
+        {
+            int leadingPlayerIndexScore = 0;
+            int leadingPlayerIndex = 0;
+            int countPlayerWithMaxScore = 0;
+
+            for (int i = 0; i < _playerIndexToScoreDKV.Count; i++)
+            {
+                if (_playerIndexToScoreDKV[i] > leadingPlayerIndexScore)
+                {
+                    leadingPlayerIndex = i;
+                    leadingPlayerIndexScore = _playerIndexToScoreDKV[i];
+                    countPlayerWithMaxScore = 0;
+                }
+                else if (_playerIndexToScoreDKV[i] == leadingPlayerIndexScore)
+                {
+                    countPlayerWithMaxScore++;
+                }
+            }
+
+            return leadingPlayerIndexScore == 0 || countPlayerWithMaxScore > 0 ? -1 : leadingPlayerIndex;
+        }
     }
 }

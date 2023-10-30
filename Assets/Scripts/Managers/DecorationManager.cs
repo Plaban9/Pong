@@ -14,6 +14,9 @@ namespace Managers
         [SerializeField]
         private Fade[] _fadeBoundsArray;
 
+        [SerializeField]
+        private SpriteRenderer[] _midAreaObjectsSpriteRenderer;
+
         public DecorationConfiguration GetDecorationConfiguration()
         {
             return _decorationConfiguration;
@@ -25,13 +28,34 @@ namespace Managers
             {
                 _fadeBoundsArray[i].OnInitialized(_decorationConfiguration);
             }
+
+            for (int i = 0; i < _midAreaObjectsSpriteRenderer.Length; i++)
+            {
+                _midAreaObjectsSpriteRenderer[i].color = _decorationConfiguration.midAreaAttributes.midAreaColor;
+            }
         }
 
-        public void OnReset()
+        public void OnReset(int playerIndex, PlayerConfiguration playerConfiguration)
         {
             for (int i = 0; i < _fadeBoundsArray.Length; i++)
             {
                 _fadeBoundsArray[i].OnReset();
+            }
+
+            Color leadingColor;
+
+            if (playerIndex == -1)
+            {
+                leadingColor = _decorationConfiguration.midAreaAttributes.midAreaColor;
+            }
+            else
+            {
+                leadingColor = playerConfiguration.playerAttributes[playerIndex].playerColour;
+            }
+
+            for (int i = 0; i < _midAreaObjectsSpriteRenderer.Length; i++)
+            {
+                _midAreaObjectsSpriteRenderer[i].color = leadingColor;
             }
         }
     }

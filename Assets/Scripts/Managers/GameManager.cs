@@ -80,7 +80,7 @@ namespace Managers
             }
 
             PlayerManager.ResetBall();
-            DecorationManager.OnReset();
+            DecorationManager.OnReset(ScoreManager.GetLeadingPlayerIndex(), PlayerManager.GetPlayerConfiguration());
         }
 
         public void SetPlayerIndex(int playerIndex)

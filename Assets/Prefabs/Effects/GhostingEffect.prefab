@@ -97,15 +97,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d8879df7390a7f4fa3c9eba75f8ddfa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectActiveTime: 0.2
+  effectActiveTime: 0.125
   timeActivated: 0
   _objectToGhost: {fileID: 0}
   _ghostEffectColor: {r: 0, g: 0, b: 0, a: 0}
   _objectToGhostColor: {r: 0, g: 0, b: 0, a: 0}
   _currentEffectAlpha: 0
   _initialEffectAlpha: 0.8
-  _multiplierEffectAlpha: 0.92
+  _multiplierEffectAlpha: 0.825
   _currentEffectScale: 0
   _initialEffectScale: 1
-  _multiplierEffectScale: 0.998
+  _multiplierEffectScale: 0.989
   _tagToGhost: Ball

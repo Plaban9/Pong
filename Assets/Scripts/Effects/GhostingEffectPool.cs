@@ -48,10 +48,7 @@ namespace Effects.Ghosting
             for (int i = 0; i < _maxPoolSize; i++)
             {
                 var instantiatedObject = Instantiate(_ghostEffectPrefab, transform);
-                instantiatedObject.transform.localPosition = new Vector3(50f, 50f, 50f);
-
-
-
+                instantiatedObject.transform.localPosition = new Vector3(500f, 500f, 500f);
             }
 
             _populatedOnce = true;
