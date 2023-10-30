@@ -93,5 +93,10 @@ namespace Managers
         {
             _playerIndexToPlayerDKV[playerIndex].gameObject.GetComponent<Paddle>().OnRallyStateChanged();
         }
+
+        public void UpdateScore(int playerIndex, int score)
+        {
+            _playerIndexToPlayerDKV[playerIndex].Score = score;
+        }
     }
 }

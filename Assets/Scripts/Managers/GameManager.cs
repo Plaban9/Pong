@@ -11,6 +11,7 @@ namespace Managers
         public static GameManager Instance { get; private set; }
         public ScoreManager ScoreManager { get; private set; }
         public PlayerManager PlayerManager { get; private set; }
+        public DecorationManager DecorationManager { get; private set; }
         public bool IsArenaReady { get; private set; } // When all required actors have instantiated
         public bool ShowBallTrail { get => showBallTrail; set => showBallTrail = value; }
 
@@ -50,6 +51,7 @@ namespace Managers
             Instance = this;
             PlayerManager = GetComponentInChildren<PlayerManager>();
             ScoreManager = GetComponentInChildren<ScoreManager>();
+            DecorationManager = GetComponentInChildren<DecorationManager>();
 
             for (int i = 0; i < playerSize; i++)
             {
@@ -58,12 +60,18 @@ namespace Managers
 
             PlayerManager.InstantiateBall();
 
+            ScoreManager.Initialize(playerSize);
+
+            DecorationManager.OnInitialized();
+
             IsArenaReady = true;
             IsInRally = false;
         }
 
-        public void ResetGame()
+        public void ResetGame(int playerIndex)
         {
+            ScoreManager.UpdateScore(playerIndex);
+
             IsInRally = false;
 
             for (int i = 0; i < playerSize; i++)
@@ -72,11 +80,17 @@ namespace Managers
             }
 
             PlayerManager.ResetBall();
+            DecorationManager.OnReset();
         }
 
         public void SetPlayerIndex(int playerIndex)
         {
             PlayerManager.SetPlayerTurnIndex(playerIndex);
+        }
+
+        public void PlayerWonNotification(int playerIndex)
+        {
+
         }
     }
 

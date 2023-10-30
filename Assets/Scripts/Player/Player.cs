@@ -8,7 +8,9 @@ namespace Agent
 
     public class Player : MonoBehaviour
     {
-        public int Score { get; private set; }
+        [SerializeField]
+        private int _score; // For Debug in Inspector
+        public int Score { get => _score; set => _score = value; }
         public string Name { get; private set; }
         public int PlayerIndex { get; private set; }
         public Color PlayerColour { get; private set; }
