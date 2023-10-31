@@ -1,5 +1,6 @@
 namespace Collision
 {
+    using Effects.Camera;
     using Effects.Fade;
 
     using Managers;
@@ -13,6 +14,9 @@ namespace Collision
 
         [SerializeField]
         private Fade[] _fadeBoundsArray;
+
+        [SerializeField]
+        private AudioClip[] _hitClips;
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
@@ -38,6 +42,13 @@ namespace Collision
                         break;
                 }
 
+                this.gameObject.GetComponent<CameraShake>().Shakecamera();
+
+                if (_hitClips != null)
+                {
+                    AudioSource.PlayClipAtPoint(_hitClips[Random.Range(0, _hitClips.Length)], transform.position, 1f);
+                }
+
                 GameManager.Instance.SetPlayerIndex(playerIndex);
                 GameManager.Instance.ResetGame(playerIndex);
             }
@@ -53,6 +64,12 @@ namespace Collision
                     case BoundLocation.BOTTOM:
                         Color initialColor = GameManager.Instance.DecorationManager.GetDecorationConfiguration().boundsAttributes.GetRandomColorFromGradient();
                         _fadeBoundsArray[collision.transform.position.x < 0f ? 0 : 1].StartFade(initialColor);
+
+                        this.gameObject.GetComponent<CameraShake>().Shakecamera();
+                        if (_hitClips != null)
+                        {
+                            AudioSource.PlayClipAtPoint(_hitClips[Random.Range(0, _hitClips.Length)], transform.position, 1f);
+                        }
                         break;
 
                     case BoundLocation.LEFT:

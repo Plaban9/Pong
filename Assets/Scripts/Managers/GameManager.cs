@@ -103,9 +103,16 @@ namespace Managers
 
         public class Paddle
         {
+            public const string PADDLE_TAG = "Paddle";
+
             #region Animation
             public const string IDLE_ANIMATION = "isInRally";
             #endregion
+        }
+
+        public class Walls
+        {
+            public const string WALL_TAG = "Wall";
         }
     }
 }

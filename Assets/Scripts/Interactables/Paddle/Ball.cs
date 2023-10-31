@@ -29,6 +29,20 @@ namespace Interactables.Ball
         [SerializeField]
         private Vector2 magnitude = new Vector2(10f, 2.5f);
 
+        [SerializeField]
+        private GameObject _particleSystemPrefab;
+
+        [SerializeField]
+        private SpriteRenderer _spriteRenderer;
+
+        [SerializeField]
+        private AudioClip[] _ballLaunchClips;
+
+        private void Awake()
+        {
+            _spriteRenderer = GetComponent<SpriteRenderer>();
+        }
+
         // Update is called once per frame
         void Update()
         {
@@ -60,6 +74,11 @@ namespace Interactables.Ball
             else
             {
                 this.GetComponent<Rigidbody2D>().velocity = new Vector2(magnitude.x, magnitude.y);
+            }
+
+            if (_ballLaunchClips != null)
+            {
+                AudioSource.PlayClipAtPoint(_ballLaunchClips[Random.Range(0, _ballLaunchClips.Length)], transform.position, 1f);
             }
         }
 
@@ -97,6 +116,18 @@ namespace Interactables.Ball
             {
                 GhostingEffectPool.Instance.ReclaimObjectFromPool();
                 _lastGhostEffectFramePosition = transform.position;
+            }
+        }
+
+        private void OnCollisionEnter2D(Collision2D collision)
+        {
+            if (collision.gameObject.CompareTag(GameplayConstants.Walls.WALL_TAG) || collision.gameObject.CompareTag(GameplayConstants.Paddle.PADDLE_TAG))
+            {
+                if (GameManager.Instance.IsInRally)
+                {
+                    Instantiate(_particleSystemPrefab, this.transform.position, Quaternion.identity);
+                    _spriteRenderer.color = GameManager.Instance.DecorationManager.GetDecorationConfiguration().boundsAttributes.GetRandomColorFromGradient();
+                }
             }
         }
     }

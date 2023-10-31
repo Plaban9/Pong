@@ -165,3 +165,10 @@ MonoBehaviour:
   _ghostEffectSpeed: 0
   _distanceBetweenGhostFrames: 0.1
   _ghostEffectCooldown: 0
+  magnitude: {x: 10, y: 2.5}
+  _particleSystemPrefab: {fileID: 8378990647484262357, guid: 502d38acee8214e4681404b6485cb3f1, type: 3}
+  _spriteRenderer: {fileID: 0}
+  _ballLaunchClips:
+  - {fileID: 8300000, guid: 62973cfa7d86dbc4ebc2590d342afef7, type: 3}
+  - {fileID: 8300000, guid: 45692948caa245342aafd1dffb52bbea, type: 3}
+  - {fileID: 8300000, guid: aca340c71002d584caa2c2cf6ccefd62, type: 3}

@@ -48,6 +48,9 @@ namespace Interactables.Paddle
         [SerializeField]
         private ParticleSystem _ballHitParticle;
 
+        [SerializeField]
+        private AudioClip[] _ballHitClips;
+
         public void SetPaddleName(string name)
         {
             _paddleName = name;
@@ -195,6 +198,11 @@ namespace Interactables.Paddle
             if (GameManager.Instance.IsInRally && collision.gameObject.CompareTag(GameplayConstants.Ball.BALL_TAG))
             {
                 _ballHitParticle.Play();
+
+                if (_ballHitClips != null)
+                {
+                    AudioSource.PlayClipAtPoint(_ballHitClips[Random.Range(0, _ballHitClips.Length)], transform.position, 1f);
+                }
             }
         }
     }

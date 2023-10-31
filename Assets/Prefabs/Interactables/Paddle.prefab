@@ -48,7 +48,7 @@ GameObject:
   - component: {fileID: 3862725702626687886}
   m_Layer: 0
   m_Name: Paddle
-  m_TagString: Untagged
+  m_TagString: Paddle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -146,6 +146,11 @@ MonoBehaviour:
   _ballPlaceholder: {fileID: 2906639967409067280}
   _paddleAnimation: {fileID: 0}
   _ballHitParticle: {fileID: 1347246624224563476}
+  _ballHitClips:
+  - {fileID: 8300000, guid: 5b40184a3b4037c44ad9996f3b17df38, type: 3}
+  - {fileID: 8300000, guid: 887d326a9e0f4e541a8df9a105772fad, type: 3}
+  - {fileID: 8300000, guid: 12899cc908a0dc84fa10a0ca6bebbc94, type: 3}
+  - {fileID: 8300000, guid: d5ade0c62d5952b40893cf042a7d5cef, type: 3}
 --- !u!60 &2119181376256312850
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -244,6 +249,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06b4b06f42c0b0d4e926451b7b4052e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _score: 0
 --- !u!95 &3862725702626687886
 Animator:
   serializedVersion: 5
