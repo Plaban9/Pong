@@ -133,15 +133,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 7599235840010813280, guid: 46640eb424e726547b5f2426e3180e95, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.009267459
+      value: 0.009262993
       objectReference: {fileID: 0}
     - target: {fileID: 7599235840010813280, guid: 46640eb424e726547b5f2426e3180e95, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.009267459
+      value: 0.009262993
       objectReference: {fileID: 0}
     - target: {fileID: 7599235840010813280, guid: 46640eb424e726547b5f2426e3180e95, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.009267459
+      value: 0.009262993
       objectReference: {fileID: 0}
     - target: {fileID: 7599235840010813280, guid: 46640eb424e726547b5f2426e3180e95, type: 3}
       propertyPath: m_LocalPosition.x
@@ -819,8 +819,8 @@ MonoBehaviour:
       Direction: 0
     Image:
       Adjustment:
-        CenterUV: {x: 0.50018966, y: -0.000000059604645}
-        UVScale: {x: 1.9992416, y: 0.9991153}
+        CenterUV: {x: 0.50035846, y: 0}
+        UVScale: {x: 1.9985672, y: 0.9995968}
         PixelsPerUnitMultiplier: 1
         scaleMode: 0
       Mode: 0
@@ -1160,8 +1160,8 @@ MonoBehaviour:
       Direction: 0
     Image:
       Adjustment:
-        CenterUV: {x: -0.50018966, y: -0.000000059604645}
-        UVScale: {x: 1.9992416, y: 0.9991153}
+        CenterUV: {x: -0.50035846, y: 0}
+        UVScale: {x: 1.9985672, y: 0.9995968}
         PixelsPerUnitMultiplier: 1
         scaleMode: 0
       Mode: 0
