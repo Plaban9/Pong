@@ -1,8 +1,9 @@
 namespace Managers.Scene
 {
     using System.Collections;
+
     using UnityEngine;
-    
+
 
     public class SceneManager : MonoBehaviour
     {
@@ -29,29 +30,53 @@ namespace Managers.Scene
 
         public void LoadNextScene()
         {
-            StartCoroutine(LoadScene());
+            Debug.Log("Loading Next Scene");
+            StartCoroutine(LoadSceneCoRoutine(_sceneName));
         }
 
-        IEnumerator LoadScene()
+        public void LoadScene(string sceneName)
+        {
+            Debug.Log("Loading Next Scene");
+            StartCoroutine(LoadSceneCoRoutine(sceneName));
+        }
+
+        IEnumerator LoadSceneCoRoutine(string sceneName)
         {
             if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex == 0)
             {
-                _animator.enabled = transform;
+                _animator.enabled = true;
+            }
+
+            if (sceneName.Equals("Gameplay"))
+            {
+               
                 _animator.SetTrigger("exit");
                 yield return new WaitForSeconds(3.2f);
             }
             else
             {
-                _animator.SetTrigger("exit");
+                _animator.enabled = true;
+                _animator.SetTrigger("exitFade");
                 yield return new WaitForSeconds(1.5f);
             }
 
-            
-            UnityEngine.SceneManagement.SceneManager.LoadScene(_sceneName);
+
+            UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
         }
 
         public void QuitGame()
         {
+            StartCoroutine(ExitGame());
+        }
+
+        private IEnumerator ExitGame()
+        {
+
+
+            _animator.enabled = transform;
+            _animator.SetTrigger("exitFade");
+            yield return new WaitForSeconds(1.5f);
+
             Application.Quit();
         }
     }
