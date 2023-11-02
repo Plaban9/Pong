@@ -133,15 +133,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 7599235840010813280, guid: 46640eb424e726547b5f2426e3180e95, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.009262993
+      value: 0.009259259
       objectReference: {fileID: 0}
     - target: {fileID: 7599235840010813280, guid: 46640eb424e726547b5f2426e3180e95, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.009262993
+      value: 0.009259259
       objectReference: {fileID: 0}
     - target: {fileID: 7599235840010813280, guid: 46640eb424e726547b5f2426e3180e95, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.009262993
+      value: 0.009259259
       objectReference: {fileID: 0}
     - target: {fileID: 7599235840010813280, guid: 46640eb424e726547b5f2426e3180e95, type: 3}
       propertyPath: m_LocalPosition.x
@@ -601,7 +601,7 @@ MonoBehaviour:
         Raw: 960
         Type: 0
       Y:
-        Raw: 1080
+        Raw: 1081
         Type: 0
       Z:
         Raw: 0
@@ -819,8 +819,8 @@ MonoBehaviour:
       Direction: 0
     Image:
       Adjustment:
-        CenterUV: {x: 0.50035846, y: 0}
-        UVScale: {x: 1.9985672, y: 0.9995968}
+        CenterUV: {x: 0.5, y: 0}
+        UVScale: {x: 2, y: 0.9990748}
         PixelsPerUnitMultiplier: 1
         scaleMode: 0
       Mode: 0
@@ -942,7 +942,7 @@ MonoBehaviour:
         Raw: 960
         Type: 0
       Y:
-        Raw: 1080
+        Raw: 1081
         Type: 0
       Z:
         Raw: 0
@@ -1160,8 +1160,8 @@ MonoBehaviour:
       Direction: 0
     Image:
       Adjustment:
-        CenterUV: {x: -0.50035846, y: 0}
-        UVScale: {x: 1.9985672, y: 0.9995968}
+        CenterUV: {x: -0.5, y: 0}
+        UVScale: {x: 2, y: 0.9990748}
         PixelsPerUnitMultiplier: 1
         scaleMode: 0
       Mode: 0
@@ -2559,8 +2559,8 @@ Camera:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 1
-    height: 1
+    width: 1920
+    height: 1080
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
