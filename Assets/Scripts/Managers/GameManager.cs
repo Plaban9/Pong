@@ -1,5 +1,8 @@
 namespace Managers
 {
+    using Data.PersistData;
+
+    using Managers.Scene;
     //MASTER SINGLETON
     using UnityEngine;
 
@@ -20,6 +23,9 @@ namespace Managers
 
         private bool _isInRally;
 
+        [SerializeField]
+        private SceneManager _sceneManager;
+
         public bool IsInRally
         {
             get
@@ -34,7 +40,7 @@ namespace Managers
                 for (int i = 0; i < playerSize; i++)
                 {
                     PlayerManager.OnRallyStateChanged(i);
-                }               
+                }
             }
         } // When the ball is in play
 
@@ -42,6 +48,8 @@ namespace Managers
 
         private void Awake()
         {
+            PersistData.PlayerWonIndex = -1;
+
             if (Instance != null && Instance != this)
             {
                 Destroy(this);
@@ -90,7 +98,8 @@ namespace Managers
 
         public void PlayerWonNotification(int playerIndex)
         {
-
+            PersistData.PlayerWonIndex = playerIndex;
+            _sceneManager.LoadNextScene();
         }
     }
 
@@ -113,6 +122,6 @@ namespace Managers
         public class Walls
         {
             public const string WALL_TAG = "Wall";
-        }
+        }        
     }
 }

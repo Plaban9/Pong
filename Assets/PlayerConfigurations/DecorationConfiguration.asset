@@ -45,3 +45,5 @@ MonoBehaviour:
       m_ColorSpace: -1
       m_NumColorKeys: 8
       m_NumAlphaKeys: 2
+  midAreaAttributes:
+    midAreaColor: {r: 1, g: 1, b: 1, a: 1}
