@@ -4,6 +4,8 @@ namespace Interactables.Paddle
 
     using Managers;
 
+    using System.Collections;
+
     using UnityEngine;
 
     public class Paddle : MonoBehaviour
@@ -20,6 +22,7 @@ namespace Interactables.Paddle
 
         [SerializeField]
         private float _magnitude;
+        private float _initialMagnitude;
 
 
         [SerializeField]
@@ -69,6 +72,7 @@ namespace Interactables.Paddle
         private void Awake()
         {
             _paddleAnimation = GetComponent<Animator>();
+            _initialMagnitude = _magnitude;
         }
 
         // Start is called before the first frame update
@@ -168,6 +172,8 @@ namespace Interactables.Paddle
 
         public void OnReset(int playerIndex, bool isStarterPaddle)
         {
+            _magnitude = _initialMagnitude;
+
             PaddleTransforms paddleTransforms = GameManager.Instance.PlayerManager.GetPlayerConfiguration().playerAttributes[playerIndex].paddleTransform;
 
             this.transform.localScale = paddleTransforms.playerScale;
@@ -204,6 +210,37 @@ namespace Interactables.Paddle
                     AudioSource.PlayClipAtPoint(_ballHitClips[Random.Range(0, _ballHitClips.Length)], transform.position, 1f);
                 }
             }
+        }
+
+        public void ApplyPowerup(PaddlePowerup paddlePowerup)
+        {
+            switch (paddlePowerup)
+            {
+                case PaddlePowerup.FREEZE:
+                    StartCoroutine(nameof(ApplyFreeze));
+                    break;
+                case PaddlePowerup.TURBO:
+                    StartCoroutine(nameof(ApplyTurbo));
+                    break;
+            }
+        }
+
+        private IEnumerator ApplyFreeze()
+        {
+            float currentMagnitude = _magnitude;
+            _magnitude = 0f;
+
+            yield return new WaitForSeconds(GameplayConstants.PowerupConstants.FREEZE_TIMER);
+            _magnitude = currentMagnitude;
+        }
+
+        private IEnumerator ApplyTurbo()
+        {
+            float currentMagnitude = _magnitude;
+            _magnitude *= 2;
+
+            yield return new WaitForSeconds(GameplayConstants.PowerupConstants.TURBO_TIMER);
+            _magnitude = currentMagnitude;
         }
     }
 }

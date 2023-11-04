@@ -66,5 +66,10 @@ namespace Agent
         {
             this.GetComponent<Paddle>().OnReset(PlayerIndex, isStarterPaddle);
         }
+
+        public void ApplyPowerup(PaddlePowerup paddlePowerup)
+        {
+            this.GetComponent<Paddle>().ApplyPowerup(paddlePowerup);
+        }
     }
 }

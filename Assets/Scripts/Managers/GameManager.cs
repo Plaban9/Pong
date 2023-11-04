@@ -2,6 +2,8 @@ namespace Managers
 {
     using Data.PersistData;
 
+    using Interactables.Ball;
+
     using Managers.Scene;
     //MASTER SINGLETON
     using UnityEngine;
@@ -101,6 +103,20 @@ namespace Managers
             PersistData.PlayerWonIndex = playerIndex;
             _sceneManager.LoadNextScene();
         }
+
+        #region TEST
+        private void Update()
+        {
+            //if (Input.GetKeyDown(KeyCode.F))
+            //{
+            //    PlayerManager.ApplyPowerup(BallGameobjectRefernce.GetComponent<Ball>().GetLastPlayerIndex(), Interactables.Paddle.PaddlePowerup.FREEZE);
+            //}
+            //else if (Input.GetKeyDown(KeyCode.T))
+            //{
+            //    PlayerManager.ApplyPowerup(BallGameobjectRefernce.GetComponent<Ball>().GetLastPlayerIndex(), Interactables.Paddle.PaddlePowerup.TURBO);
+            //}
+        }
+        #endregion
     }
 
     public class GameplayConstants
@@ -122,6 +138,12 @@ namespace Managers
         public class Walls
         {
             public const string WALL_TAG = "Wall";
-        }        
+        }
+
+        public class PowerupConstants
+        {
+            public const float FREEZE_TIMER = 5f;
+            public const float TURBO_TIMER = 5f;
+        }
     }
 }

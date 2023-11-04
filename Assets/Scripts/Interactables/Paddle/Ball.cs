@@ -1,5 +1,7 @@
 namespace Interactables.Ball
 {
+    using Agent;
+
     using Configuration.PlayerConfiguration;
 
     using Effects.Ghosting;
@@ -37,6 +39,9 @@ namespace Interactables.Ball
 
         [SerializeField]
         private AudioClip[] _ballLaunchClips;
+
+        [SerializeField]
+        private int _lastPlayerIndex = 0;
 
         private void Awake()
         {
@@ -94,9 +99,9 @@ namespace Interactables.Ball
             magnitude = ballAttributes.magnitude;
         }
 
-        public void OnReset()
+        public void OnReset(int lastPlayer)
         {
-
+            _lastPlayerIndex = lastPlayer;
         }
 
         private void ApplyColour(Color colour)
@@ -121,14 +126,26 @@ namespace Interactables.Ball
 
         private void OnCollisionEnter2D(Collision2D collision)
         {
-            if (collision.gameObject.CompareTag(GameplayConstants.Walls.WALL_TAG) || collision.gameObject.CompareTag(GameplayConstants.Paddle.PADDLE_TAG))
+            GameObject gameObject = collision.gameObject;
+
+            if (gameObject.CompareTag(GameplayConstants.Walls.WALL_TAG) || gameObject.CompareTag(GameplayConstants.Paddle.PADDLE_TAG))
             {
                 if (GameManager.Instance.IsInRally)
                 {
                     Instantiate(_particleSystemPrefab, this.transform.position, Quaternion.identity);
                     _spriteRenderer.color = GameManager.Instance.DecorationManager.GetDecorationConfiguration().boundsAttributes.GetRandomColorFromGradient();
                 }
+
+                if (gameObject.CompareTag(GameplayConstants.Paddle.PADDLE_TAG))
+                {
+                    _lastPlayerIndex = gameObject.GetComponent<Player>().PlayerIndex;
+                }
             }
+        }
+
+        public int GetLastPlayerIndex()
+        {
+            return _lastPlayerIndex;
         }
     }
 }
