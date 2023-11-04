@@ -71,7 +71,7 @@ namespace Managers
         {
             Ball ball = GameManager.Instance.BallGameobjectRefernce.GetComponent<Ball>();
             ball.paddle = _playerIndexToPlayerDKV[_playerTurnIndex].gameObject.GetComponent<Paddle>();
-            ball.OnReset();
+            ball.OnReset(_playerTurnIndex);
         }
 
         private void AddToPlayerDKV(int playerIndex, Player player)
@@ -97,6 +97,17 @@ namespace Managers
         public void UpdateScore(int playerIndex, int score)
         {
             _playerIndexToPlayerDKV[playerIndex].Score = score;
+        }
+
+        public void ApplyPowerup(int playerIndex, PaddlePowerup paddlePowerup)
+        {
+            for (int i = 0; i < _playerIndexToPlayerDKV.Count; i++) 
+            {
+                if (i != playerIndex)
+                {
+                    _playerIndexToPlayerDKV[i].ApplyPowerup(paddlePowerup);
+                }
+            }
         }
     }
 }
