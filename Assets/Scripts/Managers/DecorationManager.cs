@@ -4,6 +4,8 @@ namespace Managers
     using Configuration.PlayerConfiguration;
     using Effects.Fade;
 
+    using Environment;
+
     using UnityEngine;
 
     public class DecorationManager : MonoBehaviour
@@ -17,6 +19,9 @@ namespace Managers
         [SerializeField]
         private SpriteRenderer[] _midAreaObjectsSpriteRenderer;
 
+        [SerializeField]
+        private RotateObstacle[] _rotateObstaclesArray;
+
         public DecorationConfiguration GetDecorationConfiguration()
         {
             return _decorationConfiguration;
@@ -27,6 +32,11 @@ namespace Managers
             for (int i = 0; i < _fadeBoundsArray.Length; i++)
             {
                 _fadeBoundsArray[i].OnInitialized(_decorationConfiguration);
+            }
+
+            for (int i = 0; i < _rotateObstaclesArray.Length; i++)
+            {
+                _rotateObstaclesArray[i].OnInitialized(_decorationConfiguration);
             }
 
             for (int i = 0; i < _midAreaObjectsSpriteRenderer.Length; i++)
@@ -40,6 +50,11 @@ namespace Managers
             for (int i = 0; i < _fadeBoundsArray.Length; i++)
             {
                 _fadeBoundsArray[i].OnReset();
+            }
+
+            for (int i = 0; i < _rotateObstaclesArray.Length; i++)
+            {
+                _rotateObstaclesArray[i].OnReset();
             }
 
             Color leadingColor;

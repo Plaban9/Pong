@@ -9,6 +9,8 @@ namespace Managers
 
     using System.Collections.Generic;
 
+    using UI.PowerUp;
+
     using UnityEngine;
 
     public class PlayerManager : MonoBehaviour
@@ -31,6 +33,9 @@ namespace Managers
         [SerializeField]
         private PlayerConfiguration _playerConfiguration;
 
+        [SerializeField]
+        private PowerUpHandler[] _powerUpHandler;
+
         public PlayerConfiguration GetPlayerConfiguration()
         {
             return _playerConfiguration;
@@ -44,7 +49,7 @@ namespace Managers
             gameObject.transform.parent = _interactablesParentObject.transform;
 
             Player player = gameObject.GetComponent<Player>();
-            player.OnInstantiated(playerIndex, _playerConfiguration.playerAttributes[playerIndex], playerIndex == 0);
+            player.OnInstantiated(playerIndex, _playerConfiguration.playerAttributes[playerIndex], _powerUpHandler[playerIndex], playerIndex == 0);
 
             AddToPlayerDKV(playerIndex, player);
         }
@@ -101,7 +106,7 @@ namespace Managers
 
         public void ApplyPowerup(int playerIndex, PaddlePowerup paddlePowerup)
         {
-            for (int i = 0; i < _playerIndexToPlayerDKV.Count; i++) 
+            for (int i = 0; i < _playerIndexToPlayerDKV.Count; i++)
             {
                 if (i != playerIndex)
                 {

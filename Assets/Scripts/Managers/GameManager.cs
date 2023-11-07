@@ -107,14 +107,14 @@ namespace Managers
         #region TEST
         private void Update()
         {
-            //if (Input.GetKeyDown(KeyCode.F))
-            //{
-            //    PlayerManager.ApplyPowerup(BallGameobjectRefernce.GetComponent<Ball>().GetLastPlayerIndex(), Interactables.Paddle.PaddlePowerup.FREEZE);
-            //}
-            //else if (Input.GetKeyDown(KeyCode.T))
-            //{
-            //    PlayerManager.ApplyPowerup(BallGameobjectRefernce.GetComponent<Ball>().GetLastPlayerIndex(), Interactables.Paddle.PaddlePowerup.TURBO);
-            //}
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                PlayerManager.ApplyPowerup(BallGameobjectRefernce.GetComponent<Ball>().GetLastPlayerIndex(), Interactables.Paddle.PaddlePowerup.FREEZE);
+            }
+            else if (Input.GetKeyDown(KeyCode.T))
+            {
+                PlayerManager.ApplyPowerup(BallGameobjectRefernce.GetComponent<Ball>().GetLastPlayerIndex(), Interactables.Paddle.PaddlePowerup.TURBO);
+            }
         }
         #endregion
     }
@@ -140,10 +140,20 @@ namespace Managers
             public const string WALL_TAG = "Wall";
         }
 
+        public class Environment
+        {
+            public const string MOVEABLE_OBSTACBLE = "MoveableObstacle";
+            public const string STATIC_OBSTACBLE = "StaticObstacle";
+        }
+
         public class PowerupConstants
         {
-            public const float FREEZE_TIMER = 5f;
+            public const float FREEZE_TIMER = 2f;
             public const float TURBO_TIMER = 5f;
+
+            #region Animation
+            public const string ENTRY_ANIMATION = "entry";
+            #endregion
         }
     }
 }

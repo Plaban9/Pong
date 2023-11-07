@@ -47,3 +47,44 @@ MonoBehaviour:
       m_NumAlphaKeys: 2
   midAreaAttributes:
     midAreaColor: {r: 1, g: 1, b: 1, a: 1}
+  obstacleAttributes:
+    movableObstacle:
+      rotateSpeed: 180
+      fadeDuration: 1
+      obstacleColor: {r: 1, g: 1, b: 1, a: 1}
+      _randomColorGradient:
+        serializedVersion: 2
+        key0: {r: 0, g: 1, b: 0.18039216, a: 1}
+        key1: {r: 0.019607844, g: 0.49019608, b: 1, a: 1}
+        key2: {r: 0.59607846, g: 0, b: 1, a: 0}
+        key3: {r: 1, g: 0, b: 0.89411765, a: 0}
+        key4: {r: 1, g: 0.09803922, b: 0, a: 0}
+        key5: {r: 1, g: 0.53333336, b: 0, a: 0}
+        key6: {r: 1, g: 0.98039216, b: 0, a: 0}
+        key7: {r: 0.7137255, g: 1, b: 0, a: 0}
+        ctime0: 0
+        ctime1: 9306
+        ctime2: 18612
+        ctime3: 27918
+        ctime4: 37224
+        ctime5: 46530
+        ctime6: 55836
+        ctime7: 65535
+        atime0: 0
+        atime1: 65535
+        atime2: 0
+        atime3: 0
+        atime4: 0
+        atime5: 0
+        atime6: 0
+        atime7: 0
+        m_Mode: 0
+        m_ColorSpace: -1
+        m_NumColorKeys: 8
+        m_NumAlphaKeys: 2
+    staticObstacle:
+      fadeDuration: 2
+      obstacleColor: {r: 1, g: 1, b: 1, a: 1}
+  powerUpAttributes:
+    freezeColor: {r: 0.74509805, g: 0.95686275, b: 0.99607843, a: 1}
+    turboColor: {r: 0.92941177, g: 0.6117647, b: 0.3019608, a: 1}

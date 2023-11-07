@@ -128,7 +128,7 @@ namespace Interactables.Ball
         {
             GameObject gameObject = collision.gameObject;
 
-            if (gameObject.CompareTag(GameplayConstants.Walls.WALL_TAG) || gameObject.CompareTag(GameplayConstants.Paddle.PADDLE_TAG))
+            if (gameObject.CompareTag(GameplayConstants.Walls.WALL_TAG) || gameObject.CompareTag(GameplayConstants.Paddle.PADDLE_TAG) || gameObject.CompareTag(GameplayConstants.Environment.MOVEABLE_OBSTACBLE) || gameObject.CompareTag(GameplayConstants.Environment.STATIC_OBSTACBLE))
             {
                 if (GameManager.Instance.IsInRally)
                 {

@@ -5,7 +5,7 @@ namespace Effects.Fade
     using UnityEngine;
 
     //Bare Bones Fade
-    public class Fade : MonoBehaviour
+    public class FadeObstacle : MonoBehaviour
     {
         private float _startTime;
 
@@ -25,8 +25,8 @@ namespace Effects.Fade
 
         public void OnInitialized(DecorationConfiguration decorationConfiguration)
         {
-            _finalColor = _spriteRenderer.color = decorationConfiguration.boundsAttributes.boundColor;
-            _duration = decorationConfiguration.boundsAttributes.fadeDuration;
+            _finalColor = _spriteRenderer.color = decorationConfiguration.obstacleAttributes.movableObstacle.obstacleColor;
+            _duration = decorationConfiguration.obstacleAttributes.movableObstacle.fadeDuration;
 
             OnReset();
         }
