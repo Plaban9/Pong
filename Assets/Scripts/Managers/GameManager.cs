@@ -49,7 +49,7 @@ namespace Managers
             }
         } // When the ball is in play
 
-        public GameObject BallGameobjectRefernce { get; internal set; }
+        public GameObject BallGameobjectReference { get; internal set; }
 
         private void Awake()
         {
@@ -115,7 +115,7 @@ namespace Managers
         public void OnPowerUpCollected(PaddlePowerup paddlePowerup, GameObject powerUpObject)
         {
             PowerUpManager.OnPowerUpCollected(powerUpObject);
-            PlayerManager.ApplyPowerup(BallGameobjectRefernce.GetComponent<Ball>().GetLastPlayerIndex(), paddlePowerup);
+            PlayerManager.ApplyPowerup(BallGameobjectReference.GetComponent<Ball>().GetLastPlayerIndex(), paddlePowerup);
         }
 
         #region TEST
@@ -123,11 +123,11 @@ namespace Managers
         {
             if (Input.GetKeyDown(KeyCode.F))
             {
-                PlayerManager.ApplyPowerup(BallGameobjectRefernce.GetComponent<Ball>().GetLastPlayerIndex(), Interactables.Paddle.PaddlePowerup.FREEZE);
+                PlayerManager.ApplyPowerup(BallGameobjectReference.GetComponent<Ball>().GetLastPlayerIndex(), Interactables.Paddle.PaddlePowerup.FREEZE);
             }
             else if (Input.GetKeyDown(KeyCode.T))
             {
-                PlayerManager.ApplyPowerup(BallGameobjectRefernce.GetComponent<Ball>().GetLastPlayerIndex(), Interactables.Paddle.PaddlePowerup.TURBO);
+                PlayerManager.ApplyPowerup(BallGameobjectReference.GetComponent<Ball>().GetLastPlayerIndex(), Interactables.Paddle.PaddlePowerup.TURBO);
             }
         }
         #endregion

@@ -61,7 +61,13 @@ namespace Agent
 
         private void SetPaddleProperties(bool isStarterPaddle, PlayerAttributes playerAttributes, PowerUpHandler powerUpHandler)
         {
-            this.GetComponent<Paddle>().OnInstantiated(PlayerIndex, Name, isStarterPaddle, playerAttributes, powerUpHandler);
+            Paddle paddle = this.GetComponent<Paddle>();
+            paddle.OnInstantiated(PlayerIndex, Name, isStarterPaddle, playerAttributes, powerUpHandler);
+
+            if (PlayerIndex >= 2)
+            {
+                paddle.SetPaddleControlType(PaddleControlType.AI);
+            }
         }
 
         private void OnPaddleReset(bool isStarterPaddle)

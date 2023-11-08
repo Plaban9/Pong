@@ -18,6 +18,8 @@ namespace Interactables.Paddle
         [SerializeField]
         private bool _isStarterPaddle;
 
+        [SerializeField]
+        private PaddleControlType _paddleControlType = PaddleControlType.HUMAN;
 
         [SerializeField]
         private Vector3 _initialPosition;
@@ -64,6 +66,11 @@ namespace Interactables.Paddle
         [SerializeField]
         private AudioClip _turboClip;
 
+        [SerializeField]
+        private GameObject _ballGameObject;
+
+        [SerializeField]
+        private PaddlePositionType _paddlePositionType;
 
         public void SetPaddleName(string name)
         {
@@ -94,17 +101,56 @@ namespace Interactables.Paddle
 
         private void FixedUpdate()
         {
-            if (Input.GetKey(_leftMovementKeyCode))
+            DoMovement();
+        }
+
+        private void DoMovement()
+        {
+            switch (_paddleControlType)
             {
-                this.transform.position = GetNextPosition(this.transform.position, PaddleMovementType.LEFT);
-            }
-            else if (Input.GetKey(_rightMovementKeyCode))
-            {
-                this.transform.position = GetNextPosition(this.transform.position, PaddleMovementType.RIGHT);
+                case PaddleControlType.HUMAN:
+                    HumanMovement();
+                    break;
+                case PaddleControlType.AI:
+                    if (GameManager.Instance.IsInRally)
+                    {
+                        AIMovement();
+                    }
+                    break;
             }
         }
 
-        private Vector3 GetNextPosition(Vector3 currentPosition, PaddleMovementType paddleMovementType)
+        private void AIMovement()
+        {
+            if (_ballGameObject == null)
+            {
+                _ballGameObject = GameManager.Instance.BallGameobjectReference;
+                return;
+            }
+
+            if (_ballGameObject.transform.position.x < this.transform.position.x)
+            {
+                this.transform.position = GetNextPosition(this.transform.position, PaddleMovementType.LEFT, _paddlePositionType);
+            }
+            else if (_ballGameObject.transform.position.x > this.transform.position.x)
+            {
+                this.transform.position = GetNextPosition(this.transform.position, PaddleMovementType.RIGHT, _paddlePositionType);
+            }
+        }
+
+        private void HumanMovement()
+        {
+            if (Input.GetKey(_leftMovementKeyCode))
+            {
+                this.transform.position = GetNextPosition(this.transform.position, PaddleMovementType.LEFT, _paddlePositionType);
+            }
+            else if (Input.GetKey(_rightMovementKeyCode))
+            {
+                this.transform.position = GetNextPosition(this.transform.position, PaddleMovementType.RIGHT, _paddlePositionType);
+            }
+        }
+
+        private Vector3 GetNextPosition(Vector3 currentPosition, PaddleMovementType paddleMovementType, PaddlePositionType paddlePositionType)
         {
             switch (paddleMovementType)
             {
@@ -115,13 +161,41 @@ namespace Interactables.Paddle
                     return currentPosition;
 
                 case PaddleMovementType.LEFT:
-                    return new Vector3(currentPosition.x, GetMovementWithBoundY(currentPosition.y + (_magnitude * Time.deltaTime / 2f)), currentPosition.z);
-
+                    if (paddlePositionType == PaddlePositionType.LEFT || paddlePositionType == PaddlePositionType.RIGHT)
+                    {
+                        return new Vector3(currentPosition.x, GetMovementWithBoundY(currentPosition.y + (_magnitude * Time.deltaTime / 2f)), currentPosition.z);
+                    }
+                    else if (paddlePositionType == PaddlePositionType.UP || paddlePositionType == PaddlePositionType.DOWN)
+                    {
+                        return new Vector3(GetMovementWithBoundX(currentPosition.x - (_magnitude * Time.deltaTime / 2f)), currentPosition.y, currentPosition.z);
+                    }
+                    break;
                 case PaddleMovementType.RIGHT:
-                    return new Vector3(currentPosition.x, GetMovementWithBoundY(currentPosition.y - (_magnitude * Time.deltaTime / 2f)), currentPosition.z);
+                    if (paddlePositionType == PaddlePositionType.LEFT || paddlePositionType == PaddlePositionType.RIGHT)
+                    {
+                        return new Vector3(currentPosition.x, GetMovementWithBoundY(currentPosition.y - (_magnitude * Time.deltaTime / 2f)), currentPosition.z);
+                    }
+                    else if (paddlePositionType == PaddlePositionType.UP || paddlePositionType == PaddlePositionType.DOWN)
+                    {
+                        return new Vector3(GetMovementWithBoundX(currentPosition.x + (_magnitude * Time.deltaTime / 2f)), currentPosition.y, currentPosition.z);
+                    }
+                    break;
             }
 
             return currentPosition;
+        }
+
+        private float GetMovementWithBoundX(float nextPositionX)
+        {
+            if (_minimumBounds != null && _maximumBounds != null)
+            {
+                if (!(_minimumBounds.x == _maximumBounds.x))
+                {
+                    return Mathf.Clamp(nextPositionX, _minimumBounds.x, _maximumBounds.x);
+                }
+            }
+
+            return nextPositionX;
         }
 
         private float GetMovementWithBoundY(float nextPositionY)
@@ -180,7 +254,14 @@ namespace Interactables.Paddle
                 main.startRotation = 0;
             }
 
+            _paddlePositionType = playerAttributes.paddlePositionType;
+
             OnRallyStateChanged();
+        }
+
+        public void SetPaddleControlType(PaddleControlType paddleControlType)
+        {
+            _paddleControlType = paddleControlType;
         }
 
         public void OnReset(int playerIndex, bool isStarterPaddle)
@@ -223,6 +304,11 @@ namespace Interactables.Paddle
                     AudioSource.PlayClipAtPoint(_ballHitClips[Random.Range(0, _ballHitClips.Length)], transform.position, 1f);
                 }
             }
+        }
+
+        public PaddleControlType GetPaddleControlType()
+        {
+            return _paddleControlType;
         }
 
         public void ApplyPowerup(PaddlePowerup paddlePowerup)

@@ -10,6 +10,8 @@ namespace Interactables.Ball
 
     using Managers;
 
+    using System.Collections;
+
     using UnityEngine;
 
     public class Ball : MonoBehaviour
@@ -43,6 +45,8 @@ namespace Interactables.Ball
         [SerializeField]
         private int _lastPlayerIndex = 0;
 
+        private bool _hasAIShootCoRoutineStarted = false;
+
         private void Awake()
         {
             _spriteRenderer = GetComponent<SpriteRenderer>();
@@ -57,16 +61,34 @@ namespace Interactables.Ball
             }
 
             // Wait for a ball release
-            if (paddle != null && Input.GetKeyDown(paddle.GetBallReleaseKeyCode()) && !GameManager.Instance.IsInRally)
+            if (paddle != null && !GameManager.Instance.IsInRally)
             {
-                ShootBall();
-                GameManager.Instance.IsInRally = true;
+                if (paddle.GetPaddleControlType() == PaddleControlType.AI) 
+                {
+                    if (_hasAIShootCoRoutineStarted)
+                    {
+                        return;
+                    }
+
+                    StartCoroutine(ShootBallWhenPaddleIsAI(Random.Range(1f, 5f)));
+                }
+                else if (Input.GetKeyDown(paddle.GetBallReleaseKeyCode()))
+                {
+                    ShootBall();
+                }
             }
 
             if (GameManager.Instance.IsInRally && GameManager.Instance.ShowBallTrail)
             {
                 ShowGhostingEffect();
             }
+        }
+
+        private IEnumerator ShootBallWhenPaddleIsAI(float delay)
+        {
+            _hasAIShootCoRoutineStarted = true;
+            yield return new WaitForSeconds(delay);
+            ShootBall();
         }
 
         void ShootBall()
@@ -85,6 +107,8 @@ namespace Interactables.Ball
             {
                 AudioSource.PlayClipAtPoint(_ballLaunchClips[Random.Range(0, _ballLaunchClips.Length)], transform.position, 1f);
             }
+
+            GameManager.Instance.IsInRally = true;
         }
 
         void MoveWithPaddle()
@@ -102,6 +126,7 @@ namespace Interactables.Ball
         public void OnReset(int lastPlayer)
         {
             _lastPlayerIndex = lastPlayer;
+            _hasAIShootCoRoutineStarted = false;
         }
 
         private void ApplyColour(Color colour)
