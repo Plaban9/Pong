@@ -2,6 +2,8 @@ namespace Managers.Scene
 {
     using System.Collections;
 
+    using UI.Dropdown;
+
     using UnityEngine;
 
 
@@ -31,6 +33,12 @@ namespace Managers.Scene
         public void LoadNextScene()
         {
             Debug.Log("Loading Next Scene");
+
+            if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex == 0)
+            {
+                _sceneName = transform.GetComponent<PlayerDropDownHandler>().CurrentModeSelection.Equals("2 Players") ? "Gameplay" : "Gameplay_4v4";
+            }
+
             StartCoroutine(LoadSceneCoRoutine(_sceneName));
         }
 
@@ -47,9 +55,8 @@ namespace Managers.Scene
                 _animator.enabled = true;
             }
 
-            if (sceneName.Equals("Gameplay"))
-            {
-               
+            if (sceneName.Equals("Gameplay") || sceneName.Equals("Gameplay_4v4"))
+            {               
                 _animator.SetTrigger("exit");
                 yield return new WaitForSeconds(3.2f);
             }

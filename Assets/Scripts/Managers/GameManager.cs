@@ -121,14 +121,14 @@ namespace Managers
         #region TEST
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.F))
-            {
-                PlayerManager.ApplyPowerup(BallGameobjectReference.GetComponent<Ball>().GetLastPlayerIndex(), Interactables.Paddle.PaddlePowerup.FREEZE);
-            }
-            else if (Input.GetKeyDown(KeyCode.T))
-            {
-                PlayerManager.ApplyPowerup(BallGameobjectReference.GetComponent<Ball>().GetLastPlayerIndex(), Interactables.Paddle.PaddlePowerup.TURBO);
-            }
+            //if (Input.GetKeyDown(KeyCode.F))
+            //{
+            //    PlayerManager.ApplyPowerup(BallGameobjectReference.GetComponent<Ball>().GetLastPlayerIndex(), Interactables.Paddle.PaddlePowerup.FREEZE);
+            //}
+            //else if (Input.GetKeyDown(KeyCode.T))
+            //{
+            //    PlayerManager.ApplyPowerup(BallGameobjectReference.GetComponent<Ball>().GetLastPlayerIndex(), Interactables.Paddle.PaddlePowerup.TURBO);
+            //}
         }
         #endregion
     }
