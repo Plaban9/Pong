@@ -28,7 +28,7 @@ namespace Managers.Audio
             }
             else
             {
-                Destroy(gameObject);
+                Destroy(this);
             }
         }
 

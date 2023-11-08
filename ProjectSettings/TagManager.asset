@@ -7,6 +7,8 @@ TagManager:
   - Ball
   - Wall
   - Paddle
+  - MoveableObstacle
+  - StaticObstacle
   layers:
   - Default
   - TransparentFX

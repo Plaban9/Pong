@@ -4,6 +4,8 @@ namespace Agent
 
     using Interactables.Paddle;
 
+    using UI.PowerUp;
+
     using UnityEngine;
 
     public class Player : MonoBehaviour
@@ -16,7 +18,7 @@ namespace Agent
         public Color PlayerColour { get; private set; }
         public PaddlePositionType PositionType { get; private set; }
 
-        public void OnInstantiated(int playerIndex, PlayerAttributes playerAttributes, bool isStarterPaddle)
+        public void OnInstantiated(int playerIndex, PlayerAttributes playerAttributes, PowerUpHandler powerUpHandler, bool isStarterPaddle)
         {
             Score = 0;
             Name = playerAttributes.playerName;
@@ -25,7 +27,7 @@ namespace Agent
             PositionType = playerAttributes.paddlePositionType;
 
             PerformConfigurationOperations();
-            SetPaddleProperties(isStarterPaddle, playerAttributes);
+            SetPaddleProperties(isStarterPaddle, playerAttributes, powerUpHandler);
         }
 
         public void OnReset(int playerIndex, PlayerAttributes playerAttributes, bool isStarterPaddle)
@@ -57,9 +59,9 @@ namespace Agent
             this.GetComponent<Paddle>().SetPaddleName(name);
         }
 
-        private void SetPaddleProperties(bool isStarterPaddle, PlayerAttributes playerAttributes)
+        private void SetPaddleProperties(bool isStarterPaddle, PlayerAttributes playerAttributes, PowerUpHandler powerUpHandler)
         {
-            this.GetComponent<Paddle>().OnInstantiated(PlayerIndex, Name, isStarterPaddle, playerAttributes);
+            this.GetComponent<Paddle>().OnInstantiated(PlayerIndex, Name, isStarterPaddle, playerAttributes, powerUpHandler);
         }
 
         private void OnPaddleReset(bool isStarterPaddle)

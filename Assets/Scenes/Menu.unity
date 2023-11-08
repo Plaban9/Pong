@@ -133,15 +133,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 7599235840010813280, guid: 46640eb424e726547b5f2426e3180e95, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.008096696
+      value: 0.009260789
       objectReference: {fileID: 0}
     - target: {fileID: 7599235840010813280, guid: 46640eb424e726547b5f2426e3180e95, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.008096696
+      value: 0.009260789
       objectReference: {fileID: 0}
     - target: {fileID: 7599235840010813280, guid: 46640eb424e726547b5f2426e3180e95, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.008096696
+      value: 0.009260789
       objectReference: {fileID: 0}
     - target: {fileID: 7599235840010813280, guid: 46640eb424e726547b5f2426e3180e95, type: 3}
       propertyPath: m_LocalPosition.x
@@ -820,7 +820,7 @@ MonoBehaviour:
     Image:
       Adjustment:
         CenterUV: {x: 0.5, y: 0}
-        UVScale: {x: 2.0000002, y: 1.142527}
+        UVScale: {x: 2, y: 0.99890995}
         PixelsPerUnitMultiplier: 1
         scaleMode: 0
       Mode: 0
@@ -852,7 +852,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6f0e9230aa97be4e8a1144a29cf82e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InputTexture: {fileID: 2800000, guid: 7fefae0caecfd834286fe4cb1d8b9a27, type: 3}
+  InputTexture: {fileID: 2800000, guid: 7993f9d8f99ce4d45a978b44464498d6, type: 3}
   blurRadius: 50
   BlurMode: 1
   CropCamera: {fileID: 0}
@@ -910,7 +910,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6f0e9230aa97be4e8a1144a29cf82e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InputTexture: {fileID: 2800000, guid: 7fefae0caecfd834286fe4cb1d8b9a27, type: 3}
+  InputTexture: {fileID: 2800000, guid: 7993f9d8f99ce4d45a978b44464498d6, type: 3}
   blurRadius: 50
   BlurMode: 1
   CropCamera: {fileID: 0}
@@ -1160,8 +1160,8 @@ MonoBehaviour:
       Direction: 0
     Image:
       Adjustment:
-        CenterUV: {x: -0.49999994, y: 0}
-        UVScale: {x: 2.0000002, y: 1.142527}
+        CenterUV: {x: -0.50000006, y: 0}
+        UVScale: {x: 1.9999998, y: 0.99890995}
         PixelsPerUnitMultiplier: 1
         scaleMode: 0
       Mode: 0
@@ -2874,7 +2874,7 @@ MonoBehaviour:
       Mode: 1
     SoftenEdges: 1
     FillEnabled: 1
-  texture: {fileID: 2800000, guid: 7fefae0caecfd834286fe4cb1d8b9a27, type: 3}
+  texture: {fileID: 2800000, guid: 7993f9d8f99ce4d45a978b44464498d6, type: 3}
   sprite: {fileID: 0}
 --- !u!114 &1683382875
 MonoBehaviour:
@@ -2905,7 +2905,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1872750628
 Transform:
   m_ObjectHideFlags: 0

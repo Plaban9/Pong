@@ -2,8 +2,6 @@ namespace Effects.Fade
 {
     using Configuration.DecorationConfiguration;
 
-    using Managers;
-
     using UnityEngine;
 
     //Bare Bones Fade

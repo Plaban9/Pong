@@ -6,6 +6,8 @@ namespace Interactables.Paddle
 
     using System.Collections;
 
+    using UI.PowerUp;
+
     using UnityEngine;
 
     public class Paddle : MonoBehaviour
@@ -53,6 +55,15 @@ namespace Interactables.Paddle
 
         [SerializeField]
         private AudioClip[] _ballHitClips;
+
+        [SerializeField]
+        private PowerUpHandler _powerUpHandler;
+
+        [SerializeField]
+        private AudioClip _freezeClip;
+        [SerializeField]
+        private AudioClip _turboClip;
+
 
         public void SetPaddleName(string name)
         {
@@ -138,7 +149,7 @@ namespace Interactables.Paddle
         }
         #endregion
 
-        public void OnInstantiated(int playerIndex, string name, bool isStarterPaddle, PlayerAttributes playerAttributes)
+        public void OnInstantiated(int playerIndex, string name, bool isStarterPaddle, PlayerAttributes playerAttributes, PowerUpHandler powerUpHandler)
         {
             this.transform.localScale = playerAttributes.paddleTransform.playerScale;
             this.transform.localRotation = Quaternion.Euler(playerAttributes.paddleTransform.playerRotation);
@@ -152,6 +163,8 @@ namespace Interactables.Paddle
             _maximumBounds = playerAttributes.playSpaceBounds.upperBound;
 
             this.name = this._paddleName = name;
+
+            this._powerUpHandler = powerUpHandler;
 
             this._leftMovementKeyCode = playerAttributes.playerInput.leftMovementKeyCode;
             this._rightMovementKeyCode = playerAttributes.playerInput.rightMovementKeyCode;
@@ -217,9 +230,11 @@ namespace Interactables.Paddle
             switch (paddlePowerup)
             {
                 case PaddlePowerup.FREEZE:
+                    AudioSource.PlayClipAtPoint(_freezeClip, transform.position, 1f);
                     StartCoroutine(nameof(ApplyFreeze));
                     break;
                 case PaddlePowerup.TURBO:
+                    AudioSource.PlayClipAtPoint(_turboClip, transform.position, 1f);
                     StartCoroutine(nameof(ApplyTurbo));
                     break;
             }
@@ -227,6 +242,8 @@ namespace Interactables.Paddle
 
         private IEnumerator ApplyFreeze()
         {
+            _powerUpHandler.ShowPowerUpAnimation("FREEZE", GameManager.Instance.DecorationManager.GetDecorationConfiguration().powerUpAttributes.freezeColor);
+
             float currentMagnitude = _magnitude;
             _magnitude = 0f;
 
@@ -236,6 +253,8 @@ namespace Interactables.Paddle
 
         private IEnumerator ApplyTurbo()
         {
+            _powerUpHandler.ShowPowerUpAnimation("TURBO", GameManager.Instance.DecorationManager.GetDecorationConfiguration().powerUpAttributes.turboColor);
+
             float currentMagnitude = _magnitude;
             _magnitude *= 2;
 
