@@ -3,6 +3,7 @@ namespace Managers
     using Data.PersistData;
 
     using Interactables.Ball;
+    using Interactables.Paddle;
 
     using Managers.Scene;
     //MASTER SINGLETON
@@ -17,6 +18,8 @@ namespace Managers
         public ScoreManager ScoreManager { get; private set; }
         public PlayerManager PlayerManager { get; private set; }
         public DecorationManager DecorationManager { get; private set; }
+
+        public PowerUpManager PowerUpManager { get; private set; }
         public bool IsArenaReady { get; private set; } // When all required actors have instantiated
         public bool ShowBallTrail { get => showBallTrail; set => showBallTrail = value; }
 
@@ -62,6 +65,7 @@ namespace Managers
             PlayerManager = GetComponentInChildren<PlayerManager>();
             ScoreManager = GetComponentInChildren<ScoreManager>();
             DecorationManager = GetComponentInChildren<DecorationManager>();
+            PowerUpManager = GetComponentInChildren<PowerUpManager>();
 
             for (int i = 0; i < playerSize; i++)
             {
@@ -69,13 +73,16 @@ namespace Managers
             }
 
             PlayerManager.InstantiateBall();
-
             ScoreManager.Initialize(playerSize);
-
-            DecorationManager.OnInitialized();
-
+                    
             IsArenaReady = true;
             IsInRally = false;
+        }
+
+        public void Start()
+        {
+            DecorationManager.OnInitialized();
+            PowerUpManager.OnInitialized(DecorationManager.GetDecorationConfiguration());
         }
 
         public void ResetGame(int playerIndex)
@@ -91,6 +98,7 @@ namespace Managers
 
             PlayerManager.ResetBall();
             DecorationManager.OnReset(ScoreManager.GetLeadingPlayerIndex(), PlayerManager.GetPlayerConfiguration());
+            PowerUpManager.OnReset(DecorationManager.GetDecorationConfiguration());
         }
 
         public void SetPlayerIndex(int playerIndex)
@@ -102,6 +110,12 @@ namespace Managers
         {
             PersistData.PlayerWonIndex = playerIndex;
             _sceneManager.LoadNextScene();
+        }
+
+        public void OnPowerUpCollected(PaddlePowerup paddlePowerup, GameObject powerUpObject)
+        {
+            PowerUpManager.OnPowerUpCollected(powerUpObject);
+            PlayerManager.ApplyPowerup(BallGameobjectRefernce.GetComponent<Ball>().GetLastPlayerIndex(), paddlePowerup);
         }
 
         #region TEST

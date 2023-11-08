@@ -65,6 +65,8 @@ namespace Configuration.DecorationConfiguration
     [System.Serializable]
     public class PowerUpAttributes
     {
+        public float spawnInterval;
+        public float rotateSpeed;
         public Color freezeColor;
         public Color turboColor;
     }

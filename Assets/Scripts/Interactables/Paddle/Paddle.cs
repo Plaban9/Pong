@@ -59,6 +59,12 @@ namespace Interactables.Paddle
         [SerializeField]
         private PowerUpHandler _powerUpHandler;
 
+        [SerializeField]
+        private AudioClip _freezeClip;
+        [SerializeField]
+        private AudioClip _turboClip;
+
+
         public void SetPaddleName(string name)
         {
             _paddleName = name;
@@ -224,9 +230,11 @@ namespace Interactables.Paddle
             switch (paddlePowerup)
             {
                 case PaddlePowerup.FREEZE:
+                    AudioSource.PlayClipAtPoint(_freezeClip, transform.position, 1f);
                     StartCoroutine(nameof(ApplyFreeze));
                     break;
                 case PaddlePowerup.TURBO:
+                    AudioSource.PlayClipAtPoint(_turboClip, transform.position, 1f);
                     StartCoroutine(nameof(ApplyTurbo));
                     break;
             }

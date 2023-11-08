@@ -86,5 +86,7 @@ MonoBehaviour:
       fadeDuration: 2
       obstacleColor: {r: 1, g: 1, b: 1, a: 1}
   powerUpAttributes:
-    freezeColor: {r: 0.74509805, g: 0.95686275, b: 0.99607843, a: 1}
-    turboColor: {r: 0.92941177, g: 0.6117647, b: 0.3019608, a: 1}
+    spawnInterval: 10
+    rotateSpeed: 45
+    freezeColor: {r: 0.56078434, g: 0.92156863, b: 0.8, a: 1}
+    turboColor: {r: 1, g: 0.37254903, b: 0.12156863, a: 1}

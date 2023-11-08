@@ -151,6 +151,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 887d326a9e0f4e541a8df9a105772fad, type: 3}
   - {fileID: 8300000, guid: 12899cc908a0dc84fa10a0ca6bebbc94, type: 3}
   - {fileID: 8300000, guid: d5ade0c62d5952b40893cf042a7d5cef, type: 3}
+  _powerUpHandler: {fileID: 0}
+  _freezeClip: {fileID: 8300000, guid: c9319700855f0c14e9f95a8f24bcf635, type: 3}
+  _turboClip: {fileID: 8300000, guid: 48c7296d31a483740aaee2e546a05e06, type: 3}
 --- !u!60 &2119181376256312850
 PolygonCollider2D:
   m_ObjectHideFlags: 0
