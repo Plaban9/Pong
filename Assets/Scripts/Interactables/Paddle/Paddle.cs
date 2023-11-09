@@ -259,6 +259,11 @@ namespace Interactables.Paddle
             OnRallyStateChanged();
         }
 
+        public PaddlePositionType GetPaddlePositionType()
+        {
+            return _paddlePositionType;
+        }
+
         public void SetPaddleControlType(PaddleControlType paddleControlType)
         {
             _paddleControlType = paddleControlType;

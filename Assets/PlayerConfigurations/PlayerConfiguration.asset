@@ -52,9 +52,9 @@ MonoBehaviour:
     magnitude: 22.5
     paddlePositionType: 0
     playerInput:
-      leftMovementKeyCode: 0
-      rightMovementKeyCode: 0
-      ballReleaseKeyCode: 0
+      leftMovementKeyCode: 330
+      rightMovementKeyCode: 331
+      ballReleaseKeyCode: 332
     paddleTransform:
       playerPosition: {x: 0, y: 4.5, z: 0}
       playerScale: {x: 0.375, y: 0.375, z: 1}
@@ -63,13 +63,13 @@ MonoBehaviour:
       lowerBound: {x: -3.25, y: 0, z: 0}
       upperBound: {x: 3.25, y: 0, z: 0}
   - playerName: Player_4
-    playerColour: {r: 0.99607843, g: 0, b: 0, a: 1}
+    playerColour: {r: 1, g: 0.9490196, b: 0.019607844, a: 1}
     magnitude: 22.5
     paddlePositionType: 1
     playerInput:
-      leftMovementKeyCode: 0
-      rightMovementKeyCode: 0
-      ballReleaseKeyCode: 0
+      leftMovementKeyCode: 350
+      rightMovementKeyCode: 351
+      ballReleaseKeyCode: 352
     paddleTransform:
       playerPosition: {x: 0, y: -4.5, z: 0}
       playerScale: {x: 0.375, y: 0.375, z: 1}

@@ -63,7 +63,7 @@ namespace Interactables.Ball
             // Wait for a ball release
             if (paddle != null && !GameManager.Instance.IsInRally)
             {
-                if (paddle.GetPaddleControlType() == PaddleControlType.AI) 
+                if (paddle.GetPaddleControlType() == PaddleControlType.AI)
                 {
                     if (_hasAIShootCoRoutineStarted)
                     {
@@ -94,13 +94,27 @@ namespace Interactables.Ball
         void ShootBall()
         {
             // Shoot the ball relative to screen width center w.r.t ball position
-            if (this.transform.position.y > 0)
+            if (paddle.GetPaddlePositionType() == PaddlePositionType.RIGHT || paddle.GetPaddlePositionType() == PaddlePositionType.LEFT)
             {
-                this.GetComponent<Rigidbody2D>().velocity = new Vector2(magnitude.x, -1 * magnitude.y);
+                if (this.transform.position.y > 0)
+                {
+                    this.GetComponent<Rigidbody2D>().velocity = new Vector2(magnitude.x, -1 * magnitude.y);
+                }
+                else
+                {
+                    this.GetComponent<Rigidbody2D>().velocity = new Vector2(magnitude.x, magnitude.y);
+                }
             }
             else
             {
-                this.GetComponent<Rigidbody2D>().velocity = new Vector2(magnitude.x, magnitude.y);
+                if (this.transform.position.x > 0)
+                {
+                    this.GetComponent<Rigidbody2D>().velocity = new Vector2(-1 * magnitude.x, magnitude.y);
+                }
+                else
+                {
+                    this.GetComponent<Rigidbody2D>().velocity = new Vector2(magnitude.x, magnitude.y);
+                }
             }
 
             if (_ballLaunchClips != null)

@@ -7,6 +7,9 @@ namespace Agent
     using UI.PowerUp;
 
     using UnityEngine;
+    using static Managers.GameplayConstants;
+
+    using Paddle = Interactables.Paddle.Paddle;
 
     public class Player : MonoBehaviour
     {
@@ -68,6 +71,12 @@ namespace Agent
             {
                 paddle.SetPaddleControlType(PaddleControlType.AI);
             }
+        }
+
+        public void SetPaddleControllerType(PaddleControlType paddleControlType)
+        {
+            Paddle paddle = this.GetComponent<Paddle>();
+            paddle.SetPaddleControlType(paddleControlType);
         }
 
         private void OnPaddleReset(bool isStarterPaddle)

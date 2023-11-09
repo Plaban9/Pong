@@ -114,5 +114,27 @@ namespace Managers
                 }
             }
         }
+
+        public void SetControllers(int controllerCount)
+        {
+            Debug.Log("Player Log: " + controllerCount);
+            int playerCount = 0;
+
+            if (_playerIndexToPlayerDKV.Count > 2)
+            {
+                for (int i = 2; i < _playerIndexToPlayerDKV.Count; i++)
+                {
+                    if (playerCount < controllerCount)
+                    {
+                        _playerIndexToPlayerDKV[i].SetPaddleControllerType(PaddleControlType.HUMAN);
+                        playerCount++;
+                    }
+                    else
+                    {
+                        _playerIndexToPlayerDKV[i].SetPaddleControllerType(PaddleControlType.AI);
+                    }
+                }
+            }
+        }
     }
 }

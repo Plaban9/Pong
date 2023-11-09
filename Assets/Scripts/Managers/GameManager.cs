@@ -18,8 +18,8 @@ namespace Managers
         public ScoreManager ScoreManager { get; private set; }
         public PlayerManager PlayerManager { get; private set; }
         public DecorationManager DecorationManager { get; private set; }
-
         public PowerUpManager PowerUpManager { get; private set; }
+        public ControllerManager ControllerManager { get; private set; }
         public bool IsArenaReady { get; private set; } // When all required actors have instantiated
         public bool ShowBallTrail { get => showBallTrail; set => showBallTrail = value; }
 
@@ -66,6 +66,7 @@ namespace Managers
             ScoreManager = GetComponentInChildren<ScoreManager>();
             DecorationManager = GetComponentInChildren<DecorationManager>();
             PowerUpManager = GetComponentInChildren<PowerUpManager>();
+            ControllerManager = GetComponentInChildren<ControllerManager>();
 
             for (int i = 0; i < playerSize; i++)
             {
@@ -74,7 +75,8 @@ namespace Managers
 
             PlayerManager.InstantiateBall();
             ScoreManager.Initialize(playerSize);
-                    
+            ControllerManager.Initialize();
+
             IsArenaReady = true;
             IsInRally = false;
         }
@@ -116,6 +118,16 @@ namespace Managers
         {
             PowerUpManager.OnPowerUpCollected(powerUpObject);
             PlayerManager.ApplyPowerup(BallGameobjectReference.GetComponent<Ball>().GetLastPlayerIndex(), paddlePowerup);
+        }
+
+        public void OnControllerConnected(int controllerCount)
+        {
+            PlayerManager.SetControllers(controllerCount);
+        }
+
+        public void OnControllerDisconnected(int controllerCount)
+        {
+            PlayerManager.SetControllers(controllerCount);
         }
 
         #region TEST
