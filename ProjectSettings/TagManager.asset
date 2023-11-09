@@ -46,3 +46,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Paddle
+    uniqueID: 4196861771
+    locked: 0
+  - name: Ball
+    uniqueID: 4177293971
+    locked: 0

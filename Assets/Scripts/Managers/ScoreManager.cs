@@ -20,12 +20,14 @@ namespace Managers
 
         public void Initialize(int playerSize)
         {
+            int initialScore = playerSize == 2 ? 0 : 9;
+
             for (int i = 0; i < playerSize; i++)
             {
-                _playerIndexToScoreDKV.Add(i, 0);
+                _playerIndexToScoreDKV.Add(i, initialScore);
             }
 
-            _scoreHandler.OnInitialize(GameManager.Instance.PlayerManager.GetPlayerConfiguration(), playerSize);
+            _scoreHandler.OnInitialize(GameManager.Instance.PlayerManager.GetPlayerConfiguration(), playerSize, initialScore);
         }
 
         public void UpdateScore(int playerIndex)
@@ -35,13 +37,15 @@ namespace Managers
             if (_playerIndexToScoreDKV.Count == 2)
             {
                 actualPlayerIndex = (playerIndex + 1) % 2;
+                _playerIndexToScoreDKV[actualPlayerIndex]++;
             }
             else
             {
                 actualPlayerIndex = playerIndex;
+                _playerIndexToScoreDKV[actualPlayerIndex]--;
             }
 
-            _playerIndexToScoreDKV[actualPlayerIndex]++;
+
             GameManager.Instance.PlayerManager.UpdateScore(actualPlayerIndex, _playerIndexToScoreDKV[actualPlayerIndex]);
             _scoreHandler.OnScoreUpdate(actualPlayerIndex, _playerIndexToScoreDKV[actualPlayerIndex]);
 
@@ -49,6 +53,18 @@ namespace Managers
         }
 
         private void EvaluateWinCondition()
+        {
+            if (_playerIndexToScoreDKV.Count == 2)
+            {
+               EvaluateWinConditionForTwoPlayers();
+            }
+            else
+            {
+                EvaluateWinConditionForFourPlayers();
+            }
+        }
+
+        private void EvaluateWinConditionForTwoPlayers()
         {
             int playerWonIndex = -1;
 
@@ -62,6 +78,34 @@ namespace Managers
             }
 
             if (playerWonIndex != -1)
+            {
+                GameManager.Instance.PlayerWonNotification(playerWonIndex);
+            }
+        }
+
+        // Sudden Death
+        // A single player with the highest score
+        private void EvaluateWinConditionForFourPlayers()
+        {
+            int playerWonIndex = -1;
+            int highestScore = -10;
+            int playersWithHighestScore = 0;
+
+            for (int i = 0; i < _playerIndexToScoreDKV.Count; i++)
+            {
+                if (_playerIndexToScoreDKV[i] > highestScore)
+                {
+                    highestScore = _playerIndexToScoreDKV[i];
+                    playersWithHighestScore = 1;
+                    playerWonIndex = i;
+                }
+                else if (_playerIndexToScoreDKV[i] == highestScore)
+                {
+                    playersWithHighestScore++;
+                }
+            }
+
+            if (playersWithHighestScore == 1)
             {
                 GameManager.Instance.PlayerWonNotification(playerWonIndex);
             }

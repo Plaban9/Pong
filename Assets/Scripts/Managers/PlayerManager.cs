@@ -59,7 +59,7 @@ namespace Managers
             GameObject gameObject = Instantiate(_ballGameObject);
             gameObject.transform.parent = _interactablesParentObject.transform;
 
-            GameManager.Instance.BallGameobjectRefernce = gameObject;
+            GameManager.Instance.BallGameobjectReference = gameObject;
 
             Ball ball = gameObject.GetComponent<Ball>();
             ball.paddle = _playerIndexToPlayerDKV[_playerTurnIndex].gameObject.GetComponent<Paddle>();
@@ -74,7 +74,7 @@ namespace Managers
 
         public void ResetBall()
         {
-            Ball ball = GameManager.Instance.BallGameobjectRefernce.GetComponent<Ball>();
+            Ball ball = GameManager.Instance.BallGameobjectReference.GetComponent<Ball>();
             ball.paddle = _playerIndexToPlayerDKV[_playerTurnIndex].gameObject.GetComponent<Paddle>();
             ball.OnReset(_playerTurnIndex);
         }
@@ -111,6 +111,28 @@ namespace Managers
                 if (i != playerIndex)
                 {
                     _playerIndexToPlayerDKV[i].ApplyPowerup(paddlePowerup);
+                }
+            }
+        }
+
+        public void SetControllers(int controllerCount)
+        {
+            Debug.Log("Player Log: " + controllerCount);
+            int playerCount = 0;
+
+            if (_playerIndexToPlayerDKV.Count > 2)
+            {
+                for (int i = 2; i < _playerIndexToPlayerDKV.Count; i++)
+                {
+                    if (playerCount < controllerCount)
+                    {
+                        _playerIndexToPlayerDKV[i].SetPaddleControllerType(PaddleControlType.HUMAN);
+                        playerCount++;
+                    }
+                    else
+                    {
+                        _playerIndexToPlayerDKV[i].SetPaddleControllerType(PaddleControlType.AI);
+                    }
                 }
             }
         }

@@ -18,8 +18,8 @@ namespace Managers
         public ScoreManager ScoreManager { get; private set; }
         public PlayerManager PlayerManager { get; private set; }
         public DecorationManager DecorationManager { get; private set; }
-
         public PowerUpManager PowerUpManager { get; private set; }
+        public ControllerManager ControllerManager { get; private set; }
         public bool IsArenaReady { get; private set; } // When all required actors have instantiated
         public bool ShowBallTrail { get => showBallTrail; set => showBallTrail = value; }
 
@@ -49,7 +49,7 @@ namespace Managers
             }
         } // When the ball is in play
 
-        public GameObject BallGameobjectRefernce { get; internal set; }
+        public GameObject BallGameobjectReference { get; internal set; }
 
         private void Awake()
         {
@@ -66,6 +66,7 @@ namespace Managers
             ScoreManager = GetComponentInChildren<ScoreManager>();
             DecorationManager = GetComponentInChildren<DecorationManager>();
             PowerUpManager = GetComponentInChildren<PowerUpManager>();
+            ControllerManager = GetComponentInChildren<ControllerManager>();
 
             for (int i = 0; i < playerSize; i++)
             {
@@ -74,7 +75,8 @@ namespace Managers
 
             PlayerManager.InstantiateBall();
             ScoreManager.Initialize(playerSize);
-                    
+            ControllerManager.Initialize();
+
             IsArenaReady = true;
             IsInRally = false;
         }
@@ -115,20 +117,30 @@ namespace Managers
         public void OnPowerUpCollected(PaddlePowerup paddlePowerup, GameObject powerUpObject)
         {
             PowerUpManager.OnPowerUpCollected(powerUpObject);
-            PlayerManager.ApplyPowerup(BallGameobjectRefernce.GetComponent<Ball>().GetLastPlayerIndex(), paddlePowerup);
+            PlayerManager.ApplyPowerup(BallGameobjectReference.GetComponent<Ball>().GetLastPlayerIndex(), paddlePowerup);
+        }
+
+        public void OnControllerConnected(int controllerCount)
+        {
+            PlayerManager.SetControllers(controllerCount);
+        }
+
+        public void OnControllerDisconnected(int controllerCount)
+        {
+            PlayerManager.SetControllers(controllerCount);
         }
 
         #region TEST
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.F))
-            {
-                PlayerManager.ApplyPowerup(BallGameobjectRefernce.GetComponent<Ball>().GetLastPlayerIndex(), Interactables.Paddle.PaddlePowerup.FREEZE);
-            }
-            else if (Input.GetKeyDown(KeyCode.T))
-            {
-                PlayerManager.ApplyPowerup(BallGameobjectRefernce.GetComponent<Ball>().GetLastPlayerIndex(), Interactables.Paddle.PaddlePowerup.TURBO);
-            }
+            //if (Input.GetKeyDown(KeyCode.F))
+            //{
+            //    PlayerManager.ApplyPowerup(BallGameobjectReference.GetComponent<Ball>().GetLastPlayerIndex(), Interactables.Paddle.PaddlePowerup.FREEZE);
+            //}
+            //else if (Input.GetKeyDown(KeyCode.T))
+            //{
+            //    PlayerManager.ApplyPowerup(BallGameobjectReference.GetComponent<Ball>().GetLastPlayerIndex(), Interactables.Paddle.PaddlePowerup.TURBO);
+            //}
         }
         #endregion
     }

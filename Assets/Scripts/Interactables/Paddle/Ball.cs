@@ -10,6 +10,8 @@ namespace Interactables.Ball
 
     using Managers;
 
+    using System.Collections;
+
     using UnityEngine;
 
     public class Ball : MonoBehaviour
@@ -43,6 +45,8 @@ namespace Interactables.Ball
         [SerializeField]
         private int _lastPlayerIndex = 0;
 
+        private bool _hasAIShootCoRoutineStarted = false;
+
         private void Awake()
         {
             _spriteRenderer = GetComponent<SpriteRenderer>();
@@ -57,10 +61,21 @@ namespace Interactables.Ball
             }
 
             // Wait for a ball release
-            if (paddle != null && Input.GetKeyDown(paddle.GetBallReleaseKeyCode()) && !GameManager.Instance.IsInRally)
+            if (paddle != null && !GameManager.Instance.IsInRally)
             {
-                ShootBall();
-                GameManager.Instance.IsInRally = true;
+                if (paddle.GetPaddleControlType() == PaddleControlType.AI)
+                {
+                    if (_hasAIShootCoRoutineStarted)
+                    {
+                        return;
+                    }
+
+                    StartCoroutine(ShootBallWhenPaddleIsAI(Random.Range(1f, 5f)));
+                }
+                else if (Input.GetKeyDown(paddle.GetBallReleaseKeyCode()))
+                {
+                    ShootBall();
+                }
             }
 
             if (GameManager.Instance.IsInRally && GameManager.Instance.ShowBallTrail)
@@ -69,22 +84,45 @@ namespace Interactables.Ball
             }
         }
 
+        private IEnumerator ShootBallWhenPaddleIsAI(float delay)
+        {
+            _hasAIShootCoRoutineStarted = true;
+            yield return new WaitForSeconds(delay);
+            ShootBall();
+        }
+
         void ShootBall()
         {
             // Shoot the ball relative to screen width center w.r.t ball position
-            if (this.transform.position.y > 0)
+            if (paddle.GetPaddlePositionType() == PaddlePositionType.RIGHT || paddle.GetPaddlePositionType() == PaddlePositionType.LEFT)
             {
-                this.GetComponent<Rigidbody2D>().velocity = new Vector2(magnitude.x, -1 * magnitude.y);
+                if (this.transform.position.y > 0)
+                {
+                    this.GetComponent<Rigidbody2D>().velocity = new Vector2(magnitude.x, -1 * magnitude.y);
+                }
+                else
+                {
+                    this.GetComponent<Rigidbody2D>().velocity = new Vector2(magnitude.x, magnitude.y);
+                }
             }
             else
             {
-                this.GetComponent<Rigidbody2D>().velocity = new Vector2(magnitude.x, magnitude.y);
+                if (this.transform.position.x > 0)
+                {
+                    this.GetComponent<Rigidbody2D>().velocity = new Vector2(-1 * magnitude.x, magnitude.y);
+                }
+                else
+                {
+                    this.GetComponent<Rigidbody2D>().velocity = new Vector2(magnitude.x, magnitude.y);
+                }
             }
 
             if (_ballLaunchClips != null)
             {
                 AudioSource.PlayClipAtPoint(_ballLaunchClips[Random.Range(0, _ballLaunchClips.Length)], transform.position, 1f);
             }
+
+            GameManager.Instance.IsInRally = true;
         }
 
         void MoveWithPaddle()
@@ -102,6 +140,7 @@ namespace Interactables.Ball
         public void OnReset(int lastPlayer)
         {
             _lastPlayerIndex = lastPlayer;
+            _hasAIShootCoRoutineStarted = false;
         }
 
         private void ApplyColour(Color colour)

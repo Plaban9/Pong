@@ -27,10 +27,10 @@ namespace Collision
                 switch (boundLocation)
                 {
                     case BoundLocation.TOP:
-                        playerIndex = 3;
+                        playerIndex = 2;
                         break;
                     case BoundLocation.BOTTOM:
-                        playerIndex = 4;
+                        playerIndex = 3;
                         break;
                     case BoundLocation.LEFT:
                         playerIndex = 0;
