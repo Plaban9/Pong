@@ -5,6 +5,8 @@ namespace Environment
     using Effects.Camera;
     using Effects.Fade;
 
+    using System;
+
     using UnityEngine;
 
     public class RotateObstacle : MonoBehaviour
@@ -55,17 +57,24 @@ namespace Environment
 
         public void OnHitByBall()
         {
-            this.gameObject.GetComponent<CameraShake>().Shakecamera();
-            if (_hitClips != null)
+            try
             {
-                AudioSource.PlayClipAtPoint(_hitClips[Random.Range(0, _hitClips.Length)], transform.position, 1f);
+                this.gameObject.GetComponent<CameraShake>().Shakecamera();
+                if (_hitClips != null)
+                {
+                    AudioSource.PlayClipAtPoint(_hitClips[UnityEngine.Random.Range(0, _hitClips.Length)], transform.position, 1f);
+                }
+
+                Color initialColor = decorationConfiguration.obstacleAttributes.movableObstacle.GetRandomColorFromGradient();
+
+                for (int i = 0; i < _blades.Length; i++)
+                {
+                    _blades[i].StartFade(initialColor);
+                }
             }
-
-            Color initialColor = decorationConfiguration.obstacleAttributes.movableObstacle.GetRandomColorFromGradient();
-
-            for (int i = 0; i < _blades.Length; i++)
+            catch (Exception ignored)
             {
-                _blades[i].StartFade(initialColor);
+
             }
         }
     }

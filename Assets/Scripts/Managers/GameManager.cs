@@ -75,7 +75,15 @@ namespace Managers
 
             PlayerManager.InstantiateBall();
             ScoreManager.Initialize(playerSize);
-            ControllerManager.Initialize();
+            try
+            {
+                ControllerManager.Initialize();
+            }
+            catch (System.Exception ignored)
+            {
+
+            }
+            
 
             IsArenaReady = true;
             IsInRally = false;

@@ -60,8 +60,8 @@ MonoBehaviour:
       playerScale: {x: 0.375, y: 0.375, z: 1}
       playerRotation: {x: 0, y: 0, z: 180}
     playSpaceBounds:
-      lowerBound: {x: -3.25, y: 0, z: 0}
-      upperBound: {x: 3.25, y: 0, z: 0}
+      lowerBound: {x: -3.5, y: 0, z: 0}
+      upperBound: {x: 3.5, y: 0, z: 0}
   - playerName: Player_4
     playerColour: {r: 1, g: 0.9490196, b: 0.019607844, a: 1}
     magnitude: 22.5
@@ -75,5 +75,5 @@ MonoBehaviour:
       playerScale: {x: 0.375, y: 0.375, z: 1}
       playerRotation: {x: 0, y: 0, z: 0}
     playSpaceBounds:
-      lowerBound: {x: -3.25, y: 0, z: 0}
-      upperBound: {x: 3.25, y: 0, z: 0}
+      lowerBound: {x: -3.5, y: 0, z: 0}
+      upperBound: {x: 3.5, y: 0, z: 0}

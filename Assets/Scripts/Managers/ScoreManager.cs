@@ -105,6 +105,7 @@ namespace Managers
                 }
             }
 
+            // To Check if only one play has highest score
             if (playersWithHighestScore == 1)
             {
                 GameManager.Instance.PlayerWonNotification(playerWonIndex);

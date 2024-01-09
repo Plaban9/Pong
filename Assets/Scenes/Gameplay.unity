@@ -2519,7 +2519,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scoreHandler: {fileID: 2101148509}
-  _scoreToWin: 3
+  _scoreToWin: 10
 --- !u!1 &929768083
 GameObject:
   m_ObjectHideFlags: 0
